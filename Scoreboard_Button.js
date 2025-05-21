@@ -1,4 +1,4 @@
-import Scoreboard_View from "./Scoreboard/Scoreboard_View.js";
+import Scoreboard_View from "./Scoreboard_View.js";
 let Team1Score = 0;
 let Team2Score = 0;
 
