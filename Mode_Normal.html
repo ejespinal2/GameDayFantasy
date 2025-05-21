@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insert Players</title>
+    <style>
+        .container {
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 5px 0;
+            padding: 5px;
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Player 1's Team</h1>
+        <button onclick="addPlayer('team1')" style="background-color: dodgerblue; color: white;">
+            Insert Player Name
+        </button>
+        <ul id="team1List"></ul>
+    </div>
+    <div class="container">
+        <h1>Player 2's Team</h1>
+        <button onclick="addPlayer('team2')" style="background-color: red; color: black;">
+            Insert Player Name
+        </button>
+        <ul id="team2List"></ul>
+    </div>
+    <button onclick="startGame()" style="background-color: green; color: white; padding: 10px 20px; margin: 20px;">
+        Start Game
+    </button>
+
+    <script>
+        const players = {
+            team1: [],
+            team2: []
+        };
+
+        function addPlayer(team) {
+            const playerName = prompt(`Enter player name for ${team === 'team1' ? 'Team 1' : 'Team 2'}:`);
+            if (playerName) {
+                players[team].push(playerName);
+                updatePlayerList(team);
+            }
+        }
+
+        function updatePlayerList(team) {
+            const list = document.getElementById(`${team}List`);
+            list.innerHTML = players[team]
+                .map(player => `<li>${player}</li>`)
+                .join('');
+        }
+
+        function startGame() {
+            // Save to localStorage
+            localStorage.setItem('team1Players', JSON.stringify(players.team1));
+            localStorage.setItem('team2Players', JSON.stringify(players.team2));
+            
+            // Redirect to game page
+            window.location.href = 'Game_Start_Normal.html';
+        }
+    </script>
+</body>
+</html>
