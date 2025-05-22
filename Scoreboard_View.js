@@ -42,6 +42,7 @@ export default class Scoreboard_View{
         </div>
     </div>
     `;
+    this.loadScore();
 
     this.root.querySelectorAll('.scoreboard__control-button').forEach(controlButton => {
         controlButton.addEventListener('click', () => {
@@ -108,9 +109,25 @@ export default class Scoreboard_View{
         });
     });
     }
+    saveScore() {
+        const team1Score = this.root.querySelector('.scoreboard__score[data-for-team="1"]').textContent;
+        const team2Score = this.root.querySelector('.scoreboard__score[data-for-team="2"]').textContent;
+        localStorage.setItem('team1Score', team1Score);
+        localStorage.setItem('team2Score', team2Score);
+    }
 
+    loadScore() {
+        const team1Score = localStorage.getItem('team1Score');
+        const team2Score = localStorage.getItem('team2Score');
+        if (team1Score && team2Score) {
+            this.root.querySelector('.scoreboard__score[data-for-team="1"]').textContent = team1Score;
+            this.root.querySelector('.scoreboard__score[data-for-team="2"]').textContent = team2Score;
+        }
+    }
     update(Team1Score, Team2Score) {
         this.root.querySelector('.scoreboard__score[data-for-team="1"]').textContent = Team1Score;
         this.root.querySelector('.scoreboard__score[data-for-team="2"]').textContent = Team2Score;
+        this.saveScore();
     }
+    
 }

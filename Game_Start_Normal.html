@@ -36,11 +36,13 @@
         }
     </style>
     <link rel="stylesheet" type="text/css" href="Scoreboard.css">
+    <script src="save.js" defer></script>
 </head>
 <body>
     <div class="centered">
         <h1>Play Ball!</h1>
     </div>
+    <button onclick="endGame()" style=""position: absolute; top: 20px; right: 20px; padding:10px; background-color: #ff4444; cplor: white;">End Game</button>
 
     <div id="app"></div>
     <script src="Scoreboard_Button.js" type="module"></script>
@@ -60,6 +62,54 @@
                     .map(player => `<li>${player}</li>`)
                     .join('');
             }
+
+            function endGame() {
+                const team1Score = localStorage.getItem('team1Score') || 0;
+                const team2Score = localStorage.getItem('team2Score') || 0;
+                const modal = document.getElementById('endGameModal');
+                const resultText = document.getElementById('resultText');
+                
+                let winnerText;
+                if(team1Score > team2Score) {
+                    winnerText = `Team 1 won: ${team1Score} to ${team2Score}!`;
+                } else if(team2Score > team1Score) {
+                    winnerText = `Team 2 won: ${team2Score} to ${team1Score}!`;
+                } else {
+                    winnerText = `It's a tie: ${team1Score} to ${team2Score}!`;
+                }
+                
+                resultText.textContent = winnerText;
+                modal.style.display = 'flex';
+            }
+            
+            function goToMainMenu() {
+                localStorage.clear(); // Optional: Clear stored data
+                window.location.href = 'index.html';
+            }
+            
+            function playAgain() {
+                localStorage.removeItem('team1Score');
+                localStorage.removeItem('team2Score');
+                localStorage.removeItem('team1Players');
+                localStorage.removeItem('team2Players');
+                window.location.href = 'Mode_Normal.html';
+            }
+            
+            // Close modal if clicking outside
+            window.onclick = function(event) {
+                const modal = document.getElementById('endGameModal');
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            }
     </script>
+
+    <div id="endGameModal" class="modal">
+        <div class="modal-content">
+            <p id="resultText"></p>
+            <button onclick="goToMainMenu()">Main Menu</button>
+            <button onclick="playAgain()">Play Again</button>
+        </div>
+    </div>
 </body>
 </html>
