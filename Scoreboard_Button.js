@@ -1,6 +1,6 @@
 import Scoreboard_View from "./Scoreboard_View.js";
-let Team1Score = 0;
-let Team2Score = 0;
+let Team1Score = parseInt(localStorage.getItem('team1Score')) || 0;
+let Team2Score = parseInt(localStorage.getItem('team2Score')) || 0;
 
 const root = document.querySelector("#app");
 const view = new Scoreboard_View(root, "Team 1", "Team 2", (team, direction)=> {
